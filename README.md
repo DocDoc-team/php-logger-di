@@ -5,6 +5,8 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DocDoc-team/php-logger-di/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/DocDoc-team/php-logger-di/?branch=main)
 
 
+`composer require docdoc/psr-logger`
+
 Предоставлят типовую конфигуацию для PSR-11 логера для Symfony DI компонента.
 Логгер пишет логи один раз лог коллектор, который уже пишет в нужные пункты назначения асинхронно, не влияя на время php приложения.
 
