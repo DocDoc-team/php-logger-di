@@ -16,11 +16,11 @@ parameters:
     app.env: '%env(default:app.env.prod:APP_ENV)%'
     app.env.prod: prod
 
-    env(LOG_PROTOCOL): "udp://127.0.0.1:12201"
+    env(LOG_SOCKET): "udp://127.0.0.1:12201"
 
     logger.name: default
     logger.socket:
-        address: '%env(LOG_PROTOCOL)%'
+        address: '%env(LOG_SOCKET)%'
         connectTimeout: 0.5
         setWritingTimeout: 0.5
 
@@ -63,7 +63,7 @@ imports:
     - { resource: ../vendor/docdoc/php-logger-di/src/logger.yml } # путь до папки vendor относительно файла кофнига di
 ```
 
-Адрес подключения к сокету лог коллектора определяет `ENV` переменной `LOG_PROTOCOL`
+Адрес подключения к сокету лог коллектора определяет `ENV` переменной `LOG_SOCKET`
 
 Логгер может работать с `tcp`, `udp`, `unix` сокетом и отправлять туда данные в json формате. В качестве лог коллектора может быть использовать `fluend`, `vector`, либо любой иной лог коллектор с возможнгосью приема логов из сокета.
 

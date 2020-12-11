@@ -2,11 +2,11 @@ parameters:
     app.env: '%env(default:app.env.prod:APP_ENV)%'
     app.env.prod: prod
 
-    env(LOG_PROTOCOL): "udp://127.0.0.1:12201"
+    env(LOG_SOCKET): "udp://127.0.0.1:12201"
 
     logger.name: default
     logger.socket:
-        address: '%env(LOG_PROTOCOL)%'
+        address: '%env(LOG_SOCKET)%'
         connectTimeout: 0.5
         setWritingTimeout: 0.5
 
