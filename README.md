@@ -28,8 +28,6 @@ services:
         autowire: true
         autoconfigure: false
         public: false
-        #bind:
-        #    $appEnv: '%app.env%'
 
     DocDoc\Logger\Processor\EsIndexProcessor: ~
     DocDoc\Logger\Processor\CleanContextProcessor: ~
@@ -63,6 +61,7 @@ imports:
     - { resource: ../vendor/docdoc/php-logger-di/src/logger.yml } # путь до папки vendor относительно файла кофнига di
 ```
 
+Адрес подключения к сокету лог коллектора определяет `ENV` переменной `LOG_PROTOCOL`
 
 Логгер может работать с `tcp`, `udp`, `unix` сокетом и отправлять туда данные в json формате. В качестве лог коллектора может быть использовать `fluend`, `vector`, либо любой иной лог коллектор с возможнгосью приема логов из сокета.
 
