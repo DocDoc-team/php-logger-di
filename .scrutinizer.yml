@@ -12,22 +12,17 @@ checks:
         parameter_doc_comments: true
 
 coding_style:
-    php: {  }
+    php: { }
 
 
 build:
-    nodes:
-        analysis:
-            tests:
-                override:
-                    - php-scrutinizer-run
     environment:
         php:
             version: 7.4
     tests:
         override:
-            -
-                command: './vendor/bin/phpunit --config test/phpunit.xml --coverage-clover=test/clover.xml'
+            - php-scrutinizer-run
+            -   command: './vendor/bin/phpunit --config test/phpunit.xml --coverage-clover=test/clover.xml'
                 coverage:
                     file: 'test/clover.xml'
                     format: 'clover'
