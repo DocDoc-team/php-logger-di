@@ -1,0 +1,40 @@
+parameters:
+    app.env: '%env(default:app.env.prod:APP_ENV)%'
+    app.env.prod: prod
+
+    env(LOG_PROTOCOL): "udp://127.0.0.1:12201"
+
+    logger.name: default
+    logger.socket:
+        address: '%env(LOG_PROTOCOL)%'
+        connectTimeout: 0.5
+        setWritingTimeout: 0.5
+
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: false
+        public: false
+        #bind:
+        #    $appEnv: '%app.env%'
+
+    DocDoc\Logger\Processor\EsIndexProcessor: ~
+    DocDoc\Logger\Processor\CleanContextProcessor: ~
+
+    DocDoc\LogTraceProcessor\TraceProcessor: ~
+    DocDoc\LogTraceProcessor\TraceFormatter: ~
+
+    DocDoc\Logger\SocketJsonHandler:
+        arguments: ["%logger.socket%"]
+        calls:
+            - pushProcessor: ['@DocDoc\Logger\Processor\EsIndexProcessor']
+            - pushProcessor: ['@DocDoc\Logger\Processor\CleanContextProcessor']
+
+    Psr\Log\LoggerInterface:
+        class: Monolog\Logger
+        public: true
+        arguments:
+            $name: "@=parameter('app.env') === 'prod' ? parameter('logger.name') : parameter('app.env')~' '~parameter('logger.name')"
+            $handlers: ['@DocDoc\Logger\SocketJsonHandler']
+            $processors: ['@DocDoc\Logger\Processor\EsIndexProcessor', '@DocDoc\LogTraceProcessor\TraceProcessor']
