@@ -18,7 +18,7 @@ class SocketJsonHandler extends SocketHandler
      */
     public function __construct(array $params, $level = Logger::DEBUG, bool $bubble = true)
     {
-        $connectionString = $params['socket'] ?? 'udp://127.0.0.1:12201';
+        $connectionString = $params['address'] ?? 'udp://127.0.0.1:12201';
         parent::__construct($connectionString, $level, $bubble);
 
         $connectTimeout = $params['connectTimeout'] ?? 0;
