@@ -35,6 +35,6 @@ services:
         class: Monolog\Logger
         public: true
         arguments:
-            $name: "@=parameter('app.env') === 'prod' ? parameter('logger.name') : parameter('app.env')~' '~parameter('logger.name')"
+            $name: "@=parameter('app.env') === 'prod' ? parameter('logger.name') : parameter('app.env')~'-'~parameter('logger.name')"
             $handlers: ['@DocDoc\Logger\SocketJsonHandler']
             $processors: ['@DocDoc\Logger\Processor\EsIndexProcessor', '@DocDoc\LogTraceProcessor\TraceProcessor']
