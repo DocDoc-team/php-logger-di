@@ -25,7 +25,7 @@ class JsonFormatter extends NormalizerFormatter
         }
 
         foreach ($formatted['extra'] as $name => $value) {
-            $formatted["extra_$name"] = $value;
+            $formatted[$name] = $value;
         }
 
         unset($formatted['context'], $formatted['extra'], $formatted['datetime'], $formatted['level_name'],
