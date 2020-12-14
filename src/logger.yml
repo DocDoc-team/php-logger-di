@@ -28,8 +28,8 @@ services:
     DocDoc\Logger\SocketJsonHandler:
         arguments: ["%logger.socket%"]
         calls:
-            - pushProcessor: ['@DocDoc\Logger\Processor\EsIndexProcessor']
             - pushProcessor: ['@DocDoc\Logger\Processor\CleanContextProcessor']
+            - pushProcessor: ['@DocDoc\Logger\Processor\EsIndexProcessor']
 
     Psr\Log\LoggerInterface:
         class: Monolog\Logger
