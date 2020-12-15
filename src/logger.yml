@@ -26,7 +26,9 @@ services:
     DocDoc\LogTraceProcessor\TraceFormatter: ~
 
     DocDoc\Logger\SocketJsonHandler:
-        arguments: ["%logger.socket%"]
+        arguments:
+            $params: "%logger.socket%"
+            $level: "@=parameter('app.env') === 'prod' ? 200 : 100"
         calls:
             - pushProcessor: ['@DocDoc\Logger\Processor\CleanContextProcessor']
             - pushProcessor: ['@DocDoc\Logger\Processor\EsIndexProcessor']

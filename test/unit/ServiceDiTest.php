@@ -5,6 +5,7 @@ use DocDoc\Logger\Processor\CleanContextProcessor;
 use DocDoc\Logger\Processor\EsIndexProcessor;
 use DocDoc\Logger\SocketJsonHandler;
 use DocDoc\SymfonyDiLoader\LoaderContainer;
+use Monolog\Handler\SocketHandler;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -62,5 +63,34 @@ class ServiceDiTest extends TestCase
         static::assertCount(2, $processors);
         static::assertInstanceOf(EsIndexProcessor::class, $processors[0]);
         static::assertInstanceOf(CleanContextProcessor::class, $processors[1]);
+    }
+
+    public function testHandlerArgumentFromYml(): void
+    {
+        $container = $this->getContainer();
+        $logger = $container->get(LoggerInterface::class);
+
+        $handler = $logger->getHandlers()[0];
+
+        $prop = new ReflectionProperty(SocketHandler::class, 'connectionString');
+        $prop->setAccessible(true);
+        $value = $prop->getValue($handler);
+        static::assertSame('udp://127.0.0.1:12201', $value);
+
+        $prop = new ReflectionProperty(SocketHandler::class, 'connectionTimeout');
+        $prop->setAccessible(true);
+        $value = $prop->getValue($handler);
+        static::assertSame(0.5, $value);
+
+        $prop = new ReflectionProperty(SocketHandler::class, 'writingTimeout');
+        $prop->setAccessible(true);
+        $value = $prop->getValue($handler);
+        static::assertSame(0.5, $value);
+
+        // prod = 200, dev = 100
+        $prop = new ReflectionProperty(SocketHandler::class, 'level');
+        $prop->setAccessible(true);
+        $value = $prop->getValue($handler);
+        static::assertSame(200, $value);
     }
 }
