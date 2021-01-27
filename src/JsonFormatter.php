@@ -7,6 +7,7 @@ use Monolog\Formatter\NormalizerFormatter;
 
 class JsonFormatter extends NormalizerFormatter
 {
+
     public function __construct()
     {
         parent::__construct('Y-m-d\TH:i:s.up');
@@ -28,9 +29,7 @@ class JsonFormatter extends NormalizerFormatter
             $formatted[$name] = $value;
         }
 
-        unset($formatted['context'], $formatted['extra'], $formatted['datetime'], $formatted['level_name'],
-            $formatted['channel']
-        );
+        unset($formatted['context'], $formatted['extra'], $formatted['datetime'], $formatted['level_name']);
 
         return $formatted;
     }
